@@ -3,7 +3,6 @@ import store from '../store';
 
 export default {
     props: {
-        
         language: String,
         title: String,
         originalTitle: String,
@@ -45,6 +44,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
 .image-wrapper {
     img {
         aspect-ratio: 2/3;

@@ -1,11 +1,13 @@
 <script>
 import axios from 'axios'
 import MovieComponent from './MovieComponent.vue';
+import ShowComponent from './ShowComponent.vue';
 import store from '../store'
 
 export default {
     components: {
-        MovieComponent
+        MovieComponent,
+        ShowComponent,
     },
     data() {
         return {
@@ -20,6 +22,7 @@ export default {
     watch: {
         searchInput(newVal, oldVal) {
             this.fetchMovies()
+            this.fetchTvShows()
         }
     },
     methods: {
@@ -35,10 +38,22 @@ export default {
                 console.log(res.data)
                 this.store.movies = res.data.results
                 console.log(this.store.movies)
-                this.store.language = res.data.results.original_language
-                this.store.title = res.data.results.original_language
-                this.store.originalTitle = res.data.results.original_language
-                this.store.rating = res.data.results.original_language
+                // this.store.language = res.data.results.original_language
+                // this.store.title = res.data.results.original_language
+                // this.store.originalTitle = res.data.results.original_language
+                // this.store.rating = res.data.results.original_language
+            })
+        },
+        fetchTvShows() {
+            axios
+            .get('https://api.themoviedb.org/3/search/tv?api_key=51b46be8e0b1d65020ba814503688335&language=it_IT',
+            {
+                params: {
+                    query: this.store.search
+                }
+            })
+            .then((res) => {
+                this.store.tv = res.data.results
             })
         }
     }
@@ -49,8 +64,13 @@ export default {
   <main>
     <div class="container">
         <div class="row">
+            <span class="category-title">Film</span>
             <div v-for="(movie, i) in store.movies" :key="i" class="col">
-                <MovieComponent :movie="movie" :language="movie.original_language" :rating="movie.vote_average" :original-title="movie.original_title" :title="movie.title" />
+                <MovieComponent :language="movie.original_language" :rating="movie.vote_average" :original-title="movie.original_title" :title="movie.title" :img-src="movie.poster_path !== null ? store.imagePath + store.imageSize + movie.poster_path : store.imageNotFound"/>
+            </div>
+            <span class="category-title">Serie Tv</span>
+            <div v-for="(show, i) in store.tv" :key="i" class="col">
+                <ShowComponent :language="show.original_language" :rating="show.vote_average" :original-title="show.original_name" :title="show.name" :img-src="show.poster_path !== null ? store.imagePath + store.imageSize + show.poster_path : store.imageNotFound"  />
             </div>
         </div>
     </div>
@@ -61,8 +81,16 @@ export default {
 
 main {
     color: white;
-    .col {
-        width: calc(100% / 4);
+    padding: 10px 0;
+    .row {
+        margin: 0 -10px;
+        .category-title {
+            width: 100%;
+        }
+        .col {
+            width: calc(100% / 4);
+            padding: 10px;
+        }
     }
 }
 
