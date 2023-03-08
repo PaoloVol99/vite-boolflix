@@ -14,7 +14,8 @@ const store = reactive({
     imagePath: 'https://image.tmdb.org/t/p/',
     imageSize: 'w342',
     imageNotFound: '/notfound.webp',
-    castBasePath: 'https://api.themoviedb.org/3/movie/'
+    castBasePath: 'https://api.themoviedb.org/3/movie/',
+    castBasePathTv: 'https://api.themoviedb.org/3/tv/'
 })
 
 export default store

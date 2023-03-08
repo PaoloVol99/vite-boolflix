@@ -1,5 +1,6 @@
 <script>
 import store from '../store';
+import axios from 'axios';
 
 export default {
     props: {
@@ -8,12 +9,32 @@ export default {
         originalTitle: String,
         rating: Number,
         imgSrc: String,
+        overview: String,
+        id: {
+            type: Number,
+            required: true
+        },
 
     },
     data() {
         return {
-            store
+            store,
+            cast: [],
         }
+    },
+    created() {
+        axios
+            .get(`${this.store.castBasePathTv + this.id}/credits`, 
+            {
+                params: {
+                    api_key: this.store.apiKey,
+                    language: 'it-IT'
+                }
+            })
+            .then((res) => {
+                console.log(res.data.cast)
+                this.cast = res.data.cast
+            })
     },
     methods: {
 
@@ -48,6 +69,12 @@ export default {
             <font-awesome-icon v-if="Math.round(rating / 2) > 2" class="star" icon="fa-solid fa-star" />
             <font-awesome-icon v-if="Math.round(rating / 2) > 3" class="star" icon="fa-solid fa-star" />
             <font-awesome-icon v-if="Math.round(rating / 2) > 4" class="star" icon="fa-solid fa-star" />
+        </div>
+        <div class="cast">
+            <span class="cast-title">Cast:</span>
+            <span v-for="(actor, i) in cast" :key="i">
+                <span v-if="i <= 4">{{ i !== (cast.length - 1) && i !== 4 ? actor.name + ', ' : actor.name + '.' }}</span>
+            </span>
         </div>
         <div class="overview">
             {{ overview }}
@@ -107,6 +134,11 @@ export default {
         .overview {
             padding-top: 10px;
             border-top: 1px solid white;
+        }
+        .cast {
+            .cast-title {
+                margin-right: 5px;
+            }
         }
     }
 </style>
