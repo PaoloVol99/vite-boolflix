@@ -1,12 +1,13 @@
 @use './partials/reset.scss';
 
 .container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
 body {
     background-color: rgb(21, 21, 21);
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 .row {
