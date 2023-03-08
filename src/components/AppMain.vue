@@ -55,6 +55,20 @@ export default {
             .then((res) => {
                 this.store.tv = res.data.results
             })
+        },
+        fetchCast(id) {
+            return axios
+            .get(`${this.store.castBasePath + id}/credits`, 
+            {
+                params: {
+                    api_key: this.store.apiKey,
+                    language: 'it-IT'
+                }
+            })
+            .then((res) => {
+                console.log(res.data.cast)
+                return res.data.cast
+            })
         }
     }
 }
@@ -66,7 +80,7 @@ export default {
         <div class="row">
             <span v-if="store.movies.length > 0" class="category-title">Film</span>
             <div v-for="(movie, i) in store.movies" :key="i" class="col">
-                <MovieComponent :language="movie.original_language" :rating="movie.vote_average" :original-title="movie.original_title" :title="movie.title" :img-src="movie.poster_path !== null ? store.imagePath + store.imageSize + movie.poster_path : store.imageNotFound" :overview="movie.overview" />
+                <MovieComponent :language="movie.original_language" :rating="movie.vote_average" :original-title="movie.original_title" :title="movie.title" :img-src="movie.poster_path !== null ? store.imagePath + store.imageSize + movie.poster_path : store.imageNotFound" :overview="movie.overview" :cast="fetchCast(movie.id)" />
             </div>
             <span v-if="store.movies.length > 0" class="category-title">Serie Tv</span>
             <div v-for="(show, i) in store.tv" :key="i" class="col">

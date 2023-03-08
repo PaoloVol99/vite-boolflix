@@ -10,6 +10,7 @@ export default {
         rating: Number,
         imgSrc: String,
         overview: String,
+        cast: Array,
 
     },
     data() {
@@ -53,6 +54,9 @@ export default {
         </div>
         <div class="overview">
             {{ overview }}
+        </div>
+        <div class="cast">
+            <span v-for="actor in cast">{{ actor.name }}</span>
         </div>
     </div>
   </div>
