@@ -17,11 +17,11 @@ export default {
         },
 
     },
-    watch: {
-        id(newVal, oldVal) {
-            this.fetchCast(this.id) 
-        }
-    },
+    // watch: {
+    //     id(newVal, oldVal) {
+    //         this.fetchCast(this.id) 
+    //     }
+    // },
     data() {
         return {
             store,
@@ -43,23 +43,23 @@ export default {
             })
     },
     methods: {
-        fetchCast(movieId) {
-            axios
-            .get(`${this.store.castBasePath + movieId}/credits`, 
-            {
-                params: {
-                    api_key: this.store.apiKey,
-                    language: 'it-IT'
-                }
-            })
-            .then((res) => {
-                console.log(res.data.cast)
-                this.cast = res.data.cast
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-        }   
+        // fetchCast(movieId) {
+        //     axios
+        //     .get(`${this.store.castBasePath + movieId}/credits`, 
+        //     {
+        //         params: {
+        //             api_key: this.store.apiKey,
+        //             language: 'it-IT'
+        //         }
+        //     })
+        //     .then((res) => {
+        //         console.log(res.data.cast)
+        //         this.cast = res.data.cast
+        //     })
+        //     .catch((err) => {
+        //         console.log(err)
+        //     })
+        // }   
     
     }
 }

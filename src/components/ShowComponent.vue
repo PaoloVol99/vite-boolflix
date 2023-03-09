@@ -22,11 +22,11 @@ export default {
             cast: [],
         }
     },
-    watch: {
-        id(newVal, oldVal) {
-            this.fetchShowCast(this.id) 
-        }
-    },
+    // watch: {
+    //     id(newVal, oldVal) {
+    //         this.fetchShowCast(this.id) 
+    //     }
+    // },
     created() {
         axios
             .get(`${this.store.castBasePathTv + this.id}/credits`, 
@@ -42,20 +42,20 @@ export default {
             })
     },
     methods: {
-        fetchShowCast(showId) {
-            axios
-            .get(`${this.store.castBasePathTv + showId}/credits`, 
-            {
-                params: {
-                    api_key: this.store.apiKey,
-                    language: 'it-IT'
-                }
-            })
-            .then((res) => {
-                console.log(res.data.cast)
-                this.cast = res.data.cast
-            })
-        }
+        // fetchShowCast(showId) {
+        //     axios
+        //     .get(`${this.store.castBasePathTv + showId}/credits`, 
+        //     {
+        //         params: {
+        //             api_key: this.store.apiKey,
+        //             language: 'it-IT'
+        //         }
+        //     })
+        //     .then((res) => {
+        //         console.log(res.data.cast)
+        //         this.cast = res.data.cast
+        //     })
+        // }
     }
 }
 </script>
