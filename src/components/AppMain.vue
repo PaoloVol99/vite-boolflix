@@ -81,7 +81,7 @@ export default {
             <div v-for="(movie, i) in store.movies" :key="i" class="col">
                 <MovieComponent :language="movie.original_language" :rating="movie.vote_average" :original-title="movie.original_title" :title="movie.title" :img-src="movie.poster_path !== null ? store.imagePath + store.imageSize + movie.poster_path : store.imageNotFound" :overview="movie.overview" :id="movie.id" />
             </div>
-            <span v-if="store.movies.length > 0" class="category-title">Serie Tv</span>
+            <span v-if="store.tv.length > 0" class="category-title">Serie Tv</span>
             <div v-for="(show, i) in store.tv" :key="i" class="col">
                 <ShowComponent :language="show.original_language" :rating="show.vote_average" :original-title="show.original_name" :title="show.name" :img-src="show.poster_path !== null ? store.imagePath + store.imageSize + show.poster_path : store.imageNotFound" :overview="show.overview" :id="show.id"  />
             </div>

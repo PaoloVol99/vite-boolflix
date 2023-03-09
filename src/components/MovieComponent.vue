@@ -56,6 +56,9 @@ export default {
                 console.log(res.data.cast)
                 this.cast = res.data.cast
             })
+            .catch((err) => {
+                console.log(err)
+            })
         }   
     
     }
