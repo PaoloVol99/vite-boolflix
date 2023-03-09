@@ -26,6 +26,7 @@ export default {
         return {
             store,
             cast: [],
+            flags: ['en', 'ja', 'pt', 'es', 'cn', 'it', 'fr'],
         }
     },
     created() {
@@ -42,7 +43,30 @@ export default {
                 this.cast = res.data.cast
             })
     },
+    computed: {
+        ratingRounded() {
+            return Math.round(this.rating / 2)
+        }
+    },
     methods: {
+        langFlags() {
+            switch (this.language) {
+                case 'cn': 
+                    return '/china.png';
+                case 'it':
+                    return '/italy.png';
+                case 'ja':
+                    return '/japan.png';
+                case 'pt':
+                    return '/portugal.png';
+                case 'es':
+                    return '/spain.webp';
+                case 'en':
+                    return '/uk.png';
+                case 'fr':
+                    return '/france.png';
+            }   
+        },
         // fetchCast(movieId) {
         //     axios
         //     .get(`${this.store.castBasePath + movieId}/credits`, 
@@ -75,23 +99,19 @@ export default {
         <span>{{'Titolo Originale: ' + originalTitle}}</span>
         <div class="language">
             <span>Lingua:</span>
-            <img v-if="language === 'cn'" class="flag-image" src="/china.png" alt="">
-            <img v-else-if="language === 'it'" class="flag-image" src="/italy.png" alt="">
+            <img v-if="flags.includes(language)" class="flag-image" :src="langFlags()" alt="">
+            <!-- <img v-else-if="language === 'it'" class="flag-image" src="/italy.png" alt="">
             <img v-else-if="language === 'ja'" class="flag-image" src="/japan.png" alt="">
             <img v-else-if="language === 'pt'" class="flag-image" src="/portugal.png" alt="">
             <img v-else-if="language === 'es'" class="flag-image" src="/spain.webp" alt="">
             <img v-else-if="language === 'en'" class="flag-image" src="/uk.png" alt="">
-            <img v-else-if="language === 'fr'" class="flag-image" src="/france.png" alt="">
+            <img v-else-if="language === 'fr'" class="flag-image" src="/france.png" alt=""> -->
             <span v-else>{{ language }}</span>
         </div>
         <div class="rating">
             <span>Voto:</span>
-            <span v-if="Math.round(rating / 2) === 0">Nessun voto</span>
-            <font-awesome-icon v-if="Math.round(rating / 2) > 0" class="star" icon="fa-solid fa-star" />
-            <font-awesome-icon v-if="Math.round(rating / 2) > 1" class="star" icon="fa-solid fa-star" />
-            <font-awesome-icon v-if="Math.round(rating / 2) > 2" class="star" icon="fa-solid fa-star" />
-            <font-awesome-icon v-if="Math.round(rating / 2) > 3" class="star" icon="fa-solid fa-star" />
-            <font-awesome-icon v-if="Math.round(rating / 2) > 4" class="star" icon="fa-solid fa-star" />
+            <span v-if="ratingRounded === 0">Nessun voto</span>
+            <font-awesome-icon v-for="star in ratingRounded" class="star" icon="fa-solid fa-star" />
         </div>
         <div class="cast">
             <span class="cast-title">Cast:</span>
